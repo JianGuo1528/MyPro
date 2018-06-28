@@ -21,7 +21,7 @@ public class AyTestJob implements Job {
                 }
             }
             SchedulerContext schedulerContext = jobExecutionContext.getScheduler().getContext();
-            System.out.println("AyTestJob.execute!!!!!!");
+            System.out.println("AyTestJob.execute!!!");
             System.out.println(schedulerContext.getLong("time"));
             System.out.println("current time: " + System.currentTimeMillis());
 
