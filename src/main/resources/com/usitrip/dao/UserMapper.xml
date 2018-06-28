@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.usitrip.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.usitrip.pojo.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="api_password" jdbcType="VARCHAR" property="apiPassword"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="tel_phone" jdbcType="VARCHAR" property="telPhone"/>
+        <result column="cell_phone" jdbcType="VARCHAR" property="cellPhone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
+        <result column="role" jdbcType="INTEGER" property="role"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="hotel_chain" jdbcType="VARCHAR" property="hotelChain"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    user_id, user_name, api_password, password, name, tel_phone, cell_phone, email, created_at, 
+    role, status, hotel_chain
+  </sql>
+    <select id="selectByExample" parameterType="com.usitrip.pojo.UserExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from eb_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="page != null">
+            limit #{page.begin} , #{page.length}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from eb_user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from eb_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.usitrip.pojo.UserExample">
+        delete from eb_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.usitrip.pojo.User">
+    insert into eb_user (user_id, user_name, api_password, 
+      password, name, tel_phone, 
+      cell_phone, email, created_at, 
+      role, status, hotel_chain
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{apiPassword,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{telPhone,jdbcType=VARCHAR}, 
+      #{cellPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{role,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{hotelChain,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.usitrip.pojo.User">
+        insert into eb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="apiPassword != null">
+                api_password,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="telPhone != null">
+                tel_phone,
+            </if>
+            <if test="cellPhone != null">
+                cell_phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="role != null">
+                role,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="hotelChain != null">
+                hotel_chain,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="apiPassword != null">
+                #{apiPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="telPhone != null">
+                #{telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="cellPhone != null">
+                #{cellPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="hotelChain != null">
+                #{hotelChain,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.usitrip.pojo.UserExample" resultType="java.lang.Long">
+        select count(*) from eb_user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update eb_user
+        <set>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=INTEGER},
+            </if>
+            <if test="record.userName != null">
+                user_name = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.apiPassword != null">
+                api_password = #{record.apiPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.telPhone != null">
+                tel_phone = #{record.telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cellPhone != null">
+                cell_phone = #{record.cellPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdAt != null">
+                created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.role != null">
+                role = #{record.role,jdbcType=INTEGER},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=INTEGER},
+            </if>
+            <if test="record.hotelChain != null">
+                hotel_chain = #{record.hotelChain,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update eb_user
+        set user_id = #{record.userId,jdbcType=INTEGER},
+        user_name = #{record.userName,jdbcType=VARCHAR},
+        api_password = #{record.apiPassword,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        name = #{record.name,jdbcType=VARCHAR},
+        tel_phone = #{record.telPhone,jdbcType=VARCHAR},
+        cell_phone = #{record.cellPhone,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+        role = #{record.role,jdbcType=INTEGER},
+        status = #{record.status,jdbcType=INTEGER},
+        hotel_chain = #{record.hotelChain,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.usitrip.pojo.User">
+        update eb_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="apiPassword != null">
+                api_password = #{apiPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="telPhone != null">
+                tel_phone = #{telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="cellPhone != null">
+                cell_phone = #{cellPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="role != null">
+                role = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="hotelChain != null">
+                hotel_chain = #{hotelChain,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.usitrip.pojo.User">
+    update eb_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      api_password = #{apiPassword,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tel_phone = #{telPhone,jdbcType=VARCHAR},
+      cell_phone = #{cellPhone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      role = #{role,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      hotel_chain = #{hotelChain,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

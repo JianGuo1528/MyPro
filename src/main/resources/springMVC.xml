@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--<context:property-placeholder location="classpath:email.properties"/>-->
+
+    <!-- 注解扫描 -->
+    <context:component-scan base-package="com.usitrip.controller"/>
+
+    <!-- 注解驱动: 替我们显示的配置了最新版的注解的处理器映射器和处理器适配器 -->
+    <mvc:annotation-driven/>
+
+    <!-- 配置视图解析器 -->
+    <bean id="resourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 配置自定义转换器 -->
+    <!-- <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+         <property name="converters">
+             <set>
+                 <bean class="com.usitrip.converter.CustomGlobalStr2DateConverter"/>
+             </set>
+         </property>
+     </bean>-->
+
+    <!-- 配置静态访问资源 -->
+    <mvc:resources mapping="/js/**" location="/js/"/>
+    <mvc:resources mapping="/img/**" location="/img/"/>
+
+    <!-- 配置拦截器 -->
+    <!-- <mvc:interceptors>
+         <mvc:interceptor>
+             &lt;!&ndash; 拦截请求的路径 &ndash;&gt;
+             <mvc:mapping path="/**"/>
+             &lt;!&ndash; 不拦截的路径 &ndash;&gt;
+             <mvc:exclude-mapping path="/js/**"/>
+             &lt;!&ndash; 指定拦截器的位置 &ndash;&gt;
+             <bean class="com.usitrip.interceptor.LoginInterceptor"/>
+         </mvc:interceptor>
+     </mvc:interceptors>-->
+
+</beans>
