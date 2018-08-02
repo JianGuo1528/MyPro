@@ -20,7 +20,7 @@ import org.junit.Test;
 public class PostAndGet {
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36";
     private static final String URL = "http://www.mafengwo.cn/mdd/base/list/pagedata_citylist";
-    private static final String FILEPATH = "C:/Users/vivian.xia/Desktop/采集的数据/trafic/uscanadacity.txt";
+    private static final String FILEPATH = "C:/Users/508/Desktop/采集的数据/mfw_restaurant/uscity.txt";
 
     public static void main(String[] args) throws Exception {
         String[] pages = new String[]{"15","2","0","1","1","1","1","0","0","1","0","0","0","1","3","1",
@@ -51,7 +51,7 @@ public class PostAndGet {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < countyIds.length; i++) {
-            if (countyIds[i].equals("10062") || countyIds[i].equals("10177")) {
+            if (countyIds[i].equals("10062")) {
                 int page = Integer.parseInt(pages[i]);
                 if (page > 0) {
                     for (int j = 1; j <= page; j++) {
@@ -74,33 +74,33 @@ public class PostAndGet {
     private static String sendPost(HttpClient client, HttpPost post, String countryId, String page) throws Exception {
         // add header
         post.setHeader("User-Agent", USER_AGENT);
-
+        
         List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
         urlParameters.add(new BasicNameValuePair("mddid", countryId));
         urlParameters.add(new BasicNameValuePair("page", page));
-
+        
         post.setEntity(new UrlEncodedFormEntity(urlParameters));
-
+        
         HttpResponse response = client.execute(post);
-
+        
         BufferedReader rd = new BufferedReader(
                 new InputStreamReader(response.getEntity().getContent()));
-
+        
         StringBuilder result = new StringBuilder();
         String line = "";
         while ((line = rd.readLine()) != null) {
             result.append(line);
         }
         rd.close();
-
+        
         return result.toString();
-    }
+    }  
 
     public static void parseResponse(String s, Pattern pattern, StringBuilder sb) {
         Matcher matcher = pattern.matcher(s);
         while (matcher.find()) {
             String s1 = matcher.group();
-            sb.append("http://www.mafengwo.cn/travel-scenic-spot/mafengwo/" + s1.substring(s1.indexOf("\"") + 1, s1.lastIndexOf("\\")) + ".html\r\n");
+            sb.append("http://www.mafengwo.cn/cy/" + s1.substring(s1.indexOf("\"") + 1, s1.lastIndexOf("\\")) + "/0-0-0-0-0-1.html\r\n");
         }
     }
 
