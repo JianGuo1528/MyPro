@@ -1,5 +1,6 @@
 package com.usitrip.controller;
 
+import com.usitrip.pojo.Hotel;
 import com.usitrip.pojo.User;
 import com.usitrip.service.UserService;
 import com.usitrip.test.AyTestJob;
@@ -20,6 +21,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/user")
@@ -32,9 +34,9 @@ public class UserController {
     }
 
 
-    @RequestMapping("/test")
+    @RequestMapping("/testCode")
     @ResponseBody
-    public void test() throws SchedulerException, ParseException {
+    public void testCode() throws SchedulerException, ParseException {
         System.out.println("UserController.test!!!中文乱码");
 //        new TestJob().doSomething();
 
@@ -54,17 +56,20 @@ public class UserController {
 //        return "";
 
     }
+
     @RequestMapping("login")
-    public String login() {
+    public String login(@ModelAttribute Hotel hotel) {
+        System.out.println(hotel.getHotelId());
         System.out.println("UserController.login");
         return "login";
     }
 
-    @RequestMapping(value = "/testSave", method = RequestMethod.POST)
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
     @ResponseBody
-    public String testSave(@RequestParam Map<String, Object> map, User user, HttpServletRequest request) throws IOException {
-        System.out.println(map);
-        System.out.println(user);
+    public String testSave(@RequestBody Hotel hotel) throws IOException {
+        int[] ints = IntStream.range(0, 5)
+                .filter(n -> n > 3).map(e -> e * 10).toArray();
+        System.out.println(hotel.getHotelId());
         return "ok";
     }
 }
